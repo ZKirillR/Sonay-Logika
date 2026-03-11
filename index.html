@@ -198,15 +198,15 @@
     <audio id="click-sound" style="display: none;"></audio>
 
     <main>
-        <!-- Блок локаций -->
+        <!-- Блок локаций (со звуками) -->
         <section id="locations" class="block">
             <h2>Локации</h2>
             <div class="gallery">
-                <div class="item"><img src="https://raw.githubusercontent.com/ZKirillR/Sonay-Logika/main/Л1.jpg" alt="Локация 1"></div>
-                <div class="item"><img src="https://raw.githubusercontent.com/ZKirillR/Sonay-Logika/main/Л2.jpg" alt="Локация 2"></div>
-                <div class="item"><img src="https://raw.githubusercontent.com/ZKirillR/Sonay-Logika/main/Л3.jpg" alt="Локация 3"></div>
-                <div class="item"><img src="https://raw.githubusercontent.com/ZKirillR/Sonay-Logika/main/Л4.jpg" alt="Локация 4"></div>
-                <div class="item"><img src="https://raw.githubusercontent.com/ZKirillR/Sonay-Logika/main/Л5.jpg" alt="Локация 5"></div>
+                <div class="item" data-audio="https://raw.githubusercontent.com/ZKirillR/Sonay-Logika/main/Л1.mp3"><img src="https://raw.githubusercontent.com/ZKirillR/Sonay-Logika/main/Л1.jpg" alt="Локация 1"></div>
+                <div class="item" data-audio="https://raw.githubusercontent.com/ZKirillR/Sonay-Logika/main/Л2.mp3"><img src="https://raw.githubusercontent.com/ZKirillR/Sonay-Logika/main/Л2.jpg" alt="Локация 2"></div>
+                <div class="item" data-audio="https://raw.githubusercontent.com/ZKirillR/Sonay-Logika/main/Л3.mp3"><img src="https://raw.githubusercontent.com/ZKirillR/Sonay-Logika/main/Л3.jpg" alt="Локация 3"></div>
+                <div class="item" data-audio="https://raw.githubusercontent.com/ZKirillR/Sonay-Logika/main/Л4.mp3"><img src="https://raw.githubusercontent.com/ZKirillR/Sonay-Logika/main/Л4.jpg" alt="Локация 4"></div>
+                <div class="item" data-audio="https://raw.githubusercontent.com/ZKirillR/Sonay-Logika/main/Л5.mp3"><img src="https://raw.githubusercontent.com/ZKirillR/Sonay-Logika/main/Л5.jpg" alt="Локация 5"></div>
             </div>
         </section>
 
@@ -460,17 +460,26 @@
                 else enableBgMusic();
             });
 
+            // Обработка клика по картинкам с переключением звука
             items.forEach(item => {
                 item.addEventListener('click', () => {
                     const audioSrc = item.dataset.audio;
-                    if (audioSrc) {
+                    if (!audioSrc) return;
+
+                    // Если кликнули на ту же самую картинку, и звук сейчас играет – ставим на паузу
+                    if (clickSound.src === audioSrc && !clickSound.paused) {
+                        clickSound.pause();
+                    } else {
+                        // Иначе останавливаем текущий звук, устанавливаем новый и играем с начала
                         clickSound.pause();
                         clickSound.src = audioSrc;
+                        clickSound.currentTime = 0;
                         clickSound.play().catch(e => console.log('Не удалось воспроизвести звук:', e));
                     }
                 });
             });
 
+            // Попытка включить фоновую музыку при первом взаимодействии
             function firstInteraction() {
                 if (!isMusicOn) enableBgMusic();
                 document.removeEventListener('click', firstInteraction);
