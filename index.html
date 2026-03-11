@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sonay-Logika</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-image: url('https://raw.githubusercontent.com/ZKirillR/Sonay-Logika/main/Фон.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: -1;
+        }
+        main {
+            max-width: 1200px;
+            width: 100%;
+        }
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+            border-bottom: 3px solid #fff;
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+        .block {
+            margin-bottom: 60px;
+            text-align: center;
+        }
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            justify-content: center;
+            align-items: stretch;
+            margin-top: 20px;
+        }
+        .item {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.8);
+            border-color: #fff;
+        }
+        .item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            display: block;
+            transition: opacity 0.3s;
+        }
+        .item:hover img {
+            opacity: 0.9;
+        }
+        #story {
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            border-radius: 30px;
+            padding: 30px;
+            margin-top: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            text-align: left;
+        }
+        #story h2 {
+            border-bottom-color: rgba(255, 255, 255, 0.5);
+            margin-top: 0;
+        }
+        #story-text {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #f0f0f0;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        #toggle-music {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            padding: 15px 25px;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            border: 2px solid #fff;
+            color: #fff;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            z-index: 100;
+        }
+        #toggle-music:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+        @media (max-width: 600px) {
+            h2 { font-size: 2rem; }
+            .gallery { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+            .item img { height: 200px; }
+            #story-text { font-size: 1rem; }
+            #toggle-music { bottom: 20px; right: 20px; padding: 12px 20px; font-size: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <audio id="bg-music" src="https://raw.githubusercontent.com/ZKirillR/Sonay-Logika/main/Фон.mp3.mp3" loop muted></audio>
+    <audio id="click-sound" style="display: none;"></audio>
+
+    <main>
+        <section id="locations" class="block">
+            <h2>Локации</h2>
+            <div class="gallery">
+                <div class="item"><img src="https://raw.githubusercontent.com/ZKirillR/Sonay-Logika/main/Л1.jpg" alt="Локация 1"></div>
+                <div class="item"><img src="https://raw.githubusercontent.com/ZKirillR/Sonay-Logika/main/Л2.jpg" alt="Локация 2"></div>
+                <div class="item"><img src="https://raw.githubusercontent.com/ZKirillR/Sonay-Logika/main/Л3.jpg" alt="Локация 3"></div>
+                <div class="item"><img src="https://raw.githubusercontent.com/ZKirillR/Sonay-Logika/main/Л4.jpg" alt="Локация 4"></div>
+                <div class="item"><img src="https://raw.githubusercontent.com/ZKirillR/Sonay-Logika/main/Л5.jpg" alt="Локация 5"></div>
+            </div>
+        </section>
+
+        <section id="characters" class="block">
+            <h2>Персонажи</h2>
+            <div class="gallery">
+                <div class="item" data-audio="https://raw.githubusercontent.com/ZKirillR/Sonay-Logika/main/П1.mp3.mp3"><img src="https://raw.githubusercontent.com/ZKirillR/Sonay-Logika/main/П1.jpg" alt="Персонаж 1"></div>
+                <div class="item" data-audio="https://raw.githubusercontent.com/ZKirillR/Sonay-Logika/main/П2.mp3.mp3"><img src="https://raw.githubusercontent.com/ZKirillR/Sonay-Logika/main/П2.jpg" alt="Персонаж 2"></div>
+                <div class="item" data-audio="https://raw.githubusercontent.com/ZKirillR/Sonay-Logika/main/П3.mp3.mp3"><img src="https://raw.githubusercontent.com/ZKirillR/Sonay-Logika/main/П3.jpg" alt="Персонаж 3"></div>
+                <div class="item" data-audio="https://raw.githubusercontent.com/ZKirillR/Sonay-Logika/main/П4.mp3.mp3"><img src="https://raw.githubusercontent.com/ZKirillR/Sonay-Logika/main/П4.jpg" alt="Персонаж 4"></div>
+                <div class="item" data-audio="https://raw.githubusercontent.com/ZKirillR/Sonay-Logika/main/П5.mp3.mp3"><img src="https://raw.githubusercontent.com/ZKirillR/Sonay-Logika/main/П5.jpg" alt="Персонаж 5"></div>
+            </div>
+        </section>
+
+        <section id="story" class="block">
+            <h2>Сказка</h2>
+            <div id="story-text"><p>Загрузка...</p></div>
+        </section>
+    </main>
+
+    <button id="toggle-music">🔊 Включить музыку</button>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const bgMusic = document.getElementById('bg-music');
+            const clickSound = document.getElementById('click-sound');
+            const toggleBtn = document.getElementById('toggle-music');
+            const items = document.querySelectorAll('.item[data-audio]');
+            const storyDiv = document.getElementById('story-text');
+            let isMusicOn = false;
+
+            function enableBgMusic() {
+                bgMusic.muted = false;
+                bgMusic.play().catch(e => console.log('Автовоспроизведение заблокировано:', e));
+                isMusicOn = true;
+                toggleBtn.textContent = '🔇 Выключить музыку';
+            }
+            function disableBgMusic() {
+                bgMusic.pause();
+                isMusicOn = false;
+                toggleBtn.textContent = '🔊 Включить музыку';
+            }
+            toggleBtn.addEventListener('click', () => {
+                if (isMusicOn) disableBgMusic();
+                else enableBgMusic();
+            });
+
+            items.forEach(item => {
+                item.addEventListener('click', () => {
+                    const audioSrc = item.dataset.audio;
+                    if (audioSrc) {
+                        clickSound.pause();
+                        clickSound.src = audioSrc;
+                        clickSound.play().catch(e => console.log('Не удалось воспроизвести звук:', e));
+                    }
+                });
+            });
+
+            fetch('https://raw.githubusercontent.com/ZKirillR/Sonay-Logika/main/Lor.txt')
+                .then(response => {
+                    if (!response.ok) throw new Error('Ошибка загрузки');
+                    return response.text();
+                })
+                .then(text => { storyDiv.textContent = text; })
+                .catch(error => {
+                    storyDiv.innerHTML = `<p style="color: red;">Не удалось загрузить сказку. Проверьте наличие файла Lor.txt в репозитории.</p>`;
+                    console.error(error);
+                });
+
+            function firstInteraction() {
+                if (!isMusicOn) enableBgMusic();
+                document.removeEventListener('click', firstInteraction);
+                document.removeEventListener('touchstart', firstInteraction);
+            }
+            document.addEventListener('click', firstInteraction);
+            document.addEventListener('touchstart', firstInteraction);
+        });
+    </script>
+</body>
+</html>
